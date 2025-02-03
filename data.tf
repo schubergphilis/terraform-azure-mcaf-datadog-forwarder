@@ -1,10 +1,5 @@
 data "azurerm_client_config" "current" {}
 
-data "azurerm_service_plan" "this " {
-  name                = var.function_app_service_plan.name
-  resource_group_name = var.function_app_service_plan.resource_group_name
-}
-
 data "azurerm_key_vault" "this" {
   name                = var.key_vault.name
   resource_group_name = var.key_vault.resource_group_name

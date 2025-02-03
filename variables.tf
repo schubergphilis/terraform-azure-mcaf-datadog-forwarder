@@ -41,13 +41,9 @@ variable "event_hub" {
   })
 }
 
-variable "function_app_service_plan" {
-  description = "The properties of the App Service Plan to be used for the Function App"
-  type = object({
-    name                = string
-    resource_group_name = string
-  })
-  default = null
+variable "function_app_service_plan_id" {
+  description = "The Resource ID of the App Service Plan to be used for the Function App"
+  type = string
 }
 
 variable "key_vault" {
@@ -65,7 +61,7 @@ variable "key_vault_secret_datadog_apikey_name" {
 }
 
 variable "key_vault_secret_cmk_key_name" {
-  type        = optional(string, "encryptio-key")
+  type        = optional(string, "encryption-key")
   description = "The name of the Key Vault secret used for Customer-Managed Keys encryption"
 }
 

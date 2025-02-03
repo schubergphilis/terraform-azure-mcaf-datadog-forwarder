@@ -3,7 +3,7 @@ resource "azurerm_linux_function_app" "this" {
   location            = var.location
   resource_group_name = var.resource_group_name
   name                = var.function_app_name
-  service_plan_id     = data.azurerm_service_plan.appr.id
+  service_plan_id     = var.function_app_service_plan_id
 
   app_settings = {
     "AzureWebJobsStorage__blobServiceUri" = module.storage_account.endpoints.primary_blob_endpoint
