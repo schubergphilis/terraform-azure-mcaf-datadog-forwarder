@@ -41,10 +41,15 @@ variable "event_hub" {
   })
 }
 
-variable "function_app_service_plan_id" {
-  description = "The Resource ID of the App Service Plan to be used for the Function App"
-  type = string
+variable "function_app" {
+  description = "The parameters to be used for the Function App deployment. Inludes the ID of the App Service Plan to be used and the ID of the subent for regional VNET integration"
+  type = object({
+    service_plan_id = string
+    vnet_subnet_id = string
+  })
 }
+
+
 
 variable "key_vault" {
   description = "The properties of the Key Vault to be used to store secrets"
