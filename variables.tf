@@ -32,7 +32,7 @@ variable "managed_identity_name" {
 variable "event_hub" {
   description = "The properties of the Event Hub to be deployed"
   type = object({
-    namespace_namename = string
+    namespace_name     = string
     sku                = optional(string, "Premium")
     capacity           = optional(number, 2)
     hub_name           = string
