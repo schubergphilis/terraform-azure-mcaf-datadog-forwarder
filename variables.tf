@@ -45,11 +45,9 @@ variable "function_app" {
   description = "The parameters to be used for the Function App deployment. Inludes the ID of the App Service Plan to be used and the ID of the subent for regional VNET integration"
   type = object({
     service_plan_id = string
-    vnet_subnet_id = string
+    vnet_subnet_id  = string
   })
 }
-
-
 
 variable "key_vault" {
   description = "The properties of the Key Vault to be used to store secrets"
@@ -61,13 +59,14 @@ variable "key_vault" {
 }
 
 variable "key_vault_secret_datadog_apikey_name" {
-  type        = optional(string, "datadog-api-key")
+  type        = string
   description = "The name of the Key Vault secret containing the DataDog API key"
+  default     = "datadog-api-key"
 }
 
 variable "key_vault_secret_cmk_key_name" {
-  type        = optional(string, "encryption-key")
-  description = "The name of the Key Vault secret used for Customer-Managed Keys encryption"
+  type    = string
+  default = "cmkrsa"
 }
 
 variable "storage_account" {
@@ -84,7 +83,7 @@ variable "storage_account" {
     snapshot_retention_days           = optional(number, 90)
     infrastructure_encryption_enabled = optional(bool, true)
     cmk_key_vault_id                  = optional(string, null)
-    cmk_key_name                      = optional(string, "encryption-key")
+    cmk_key_name                      = optional(string, "cmkrsa")
     system_assigned_identity_enabled  = optional(bool, false)
     user_assigned_identities          = optional(list(string), [])
     enable_law_data_export            = optional(bool, false)
