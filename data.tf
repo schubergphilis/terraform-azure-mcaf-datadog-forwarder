@@ -10,7 +10,7 @@ data "azurerm_key_vault_secret" "datadog_api_key" {
   key_vault_id = data.azurerm_key_vault.this.id
 }
 
-data "azurerm_key_vault_secret" "cmk_encryption_key" {
+data "azurerm_key_vault_key" "cmk_encryption_key" {
   name         = var.key_vault_secret_cmk_key_name
   key_vault_id = data.azurerm_key_vault.this.id
 }
