@@ -8,8 +8,6 @@ module "storage_account" {
   account_replication_type          = var.storage_account.account_replication_type
   account_kind                      = "StorageV2"
   access_tier                       = var.storage_account.access_tier
-  public_network_access_enabled     = var.storage_account.public_network_access_enabled
-  https_traffic_only_enabled        = true
   infrastructure_encryption_enabled = var.storage_account.infrastructure_encryption_enabled
   cmk_key_vault_id                  = var.storage_account.cmk_key_vault_id
   cmk_key_name                      = var.storage_account.cmk_key_name
