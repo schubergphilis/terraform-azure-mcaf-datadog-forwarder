@@ -14,3 +14,8 @@ data "azurerm_key_vault_key" "cmk_encryption_key" {
   name         = var.key_vault_secret_cmk_key_name
   key_vault_id = data.azurerm_key_vault.this.id
 }
+
+data "azurerm_storage_account" "this" {
+  name                = var.storage_account.name
+  resource_group_name = var.resource_group_name
+}
