@@ -6,6 +6,7 @@ resource "azurerm_linux_function_app" "this" {
   virtual_network_subnet_id     = var.function_app.vnet_subnet_id
   storage_account_name          = var.storage_account.name
   storage_uses_managed_identity = true
+  https_only                    = true
 
   app_settings = {
     "AzureWebJobsStorage__blobServiceUri" = module.storage_account.endpoints.primary_blob_endpoint
