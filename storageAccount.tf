@@ -1,5 +1,5 @@
 module "storage_account" {
-  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.4.0"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.0"
 
   name                              = var.storage_account.name
   location                          = var.location
