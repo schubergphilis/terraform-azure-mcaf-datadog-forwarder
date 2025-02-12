@@ -12,7 +12,7 @@ module "storage_account" {
   cmk_key_vault_id                  = var.storage_account.cmk_key_vault_id
   cmk_key_name                      = var.storage_account.cmk_key_name
   system_assigned_identity_enabled  = var.storage_account.system_assigned_identity_enabled
-  user_assigned_identities          = azurerm_user_assigned_identity.datadog_mid.id
+  user_assigned_identities          = list(azurerm_user_assigned_identity.datadog_mid.id)
   immutability_policy               = var.storage_account.immutability_policy
   tags = merge(
     try(var.tags),
