@@ -16,6 +16,7 @@ data "azurerm_key_vault_key" "cmk_encryption_key" {
 }
 
 data "azurerm_storage_account" "this" {
+  depends_on = [ module.storage_account ]
   name                = var.storage_account.name
   resource_group_name = var.resource_group_name
 }
