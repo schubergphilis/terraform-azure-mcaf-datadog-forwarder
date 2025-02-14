@@ -55,6 +55,10 @@ resource "azurerm_linux_function_app" "this" {
   storage_account_name          = module.storage_account.name
   storage_uses_managed_identity = true
   https_only                    = true
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.func_datadog_mid.id]
+  }
   key_vault_reference_identity_id = azurerm_user_assigned_identity.func_datadog_mid.id
   app_settings = {
     "AzureWebJobsStorage__blobServiceUri" = module.storage_account.endpoints.primary_blob_endpoint
