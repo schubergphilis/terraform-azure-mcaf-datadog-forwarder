@@ -46,13 +46,13 @@ resource "azurerm_role_assignment" "func_datadog_mid_keyvault" {
 }
 
 resource "azurerm_linux_function_app" "this" {
-  depends_on                    = [ azurerm_role_assignment.func_datadog_mid_sta_blob, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table, azurerm_role_assignment.func_datadog_mid_keyvault ]
+  depends_on                    = [ module.storage_account, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table, azurerm_role_assignment.func_datadog_mid_keyvault ]
   location                      = var.location
   resource_group_name           = var.resource_group_name
   name                          = var.function_app_name
   service_plan_id               = var.function_app.service_plan_id
   virtual_network_subnet_id     = var.function_app.vnet_subnet_id
-  storage_account_name          = var.storage_account.name
+  storage_account_name          = module.storage_account.name
   storage_uses_managed_identity = true
   https_only                    = true
   key_vault_reference_identity_id = azurerm_user_assigned_identity.func_datadog_mid.id
