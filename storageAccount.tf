@@ -10,7 +10,16 @@ resource "azurerm_user_assigned_identity" "sta_datadog_mid" {
   )
 }
 
+resource "azurerm_role_assignment" "sta_datadog_mid" {
+  principal_id                     = azurerm_user_assigned_identity.sta_datadog_mid.principal_id
+  scope                            = data.azurerm_key_vault.this.id
+  role_definition_name             = "Key Vault Crypto User"
+  skip_service_principal_aad_check = false
+}
+
+
 module "storage_account" {
+  depends_on = [ azurerm_role_assignment.sta_datadog_mid ]
   source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.0"
 
   name                              = var.storage_account.name
