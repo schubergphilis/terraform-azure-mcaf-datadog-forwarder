@@ -22,7 +22,7 @@ resource "azurerm_linux_function_app" "this" {
     "DD_API_KEY"                          = data.azurerm_key_vault_secret.datadog_api_key.value
   }
   site_config {
-
+    always_on = true
   }
   tags = merge(
     try(var.tags),
