@@ -1,3 +1,15 @@
+resource "azurerm_user_assigned_identity" "func_datadog_mid" {
+  name                = format("${var.managed_identity_name}%s", "-func")
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  tags = merge(
+    try(var.tags),
+    tomap({
+      "Resource Type" = "Managed Identity"
+    })
+  )
+}
+
 resource "azurerm_linux_function_app" "this" {
   location                      = var.location
   resource_group_name           = var.resource_group_name
@@ -10,10 +22,10 @@ resource "azurerm_linux_function_app" "this" {
 
   app_settings = {
     "AzureWebJobsStorage__blobServiceUri" = module.storage_account.endpoints.primary_blob_endpoint
-    "AzureWebJobsStorage__clientId"       = azurerm_user_assigned_identity.datadog_mid.client_id
+    "AzureWebJobsStorage__clientId"       = azurerm_user_assigned_identity.func_datadog_mid.client_id
     "AzureWebJobsStorage__credential"     = "managedidentity"
     "azeventhub__fullyQualifiedNamespace" = "${var.event_hub.namespace_name}.servicebus.windows.net"
-    "azeventhub__clientId"                = azurerm_user_assigned_identity.datadog_mid.client_id
+    "azeventhub__clientId"                = azurerm_user_assigned_identity.func_datadog_mid.client_id
     "azeventhub__credential"              = "managedidentity"
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"     = true
@@ -28,18 +40,6 @@ resource "azurerm_linux_function_app" "this" {
     try(var.tags),
     tomap({
       "Resource Type" = "Function App"
-    })
-  )
-}
-
-resource "azurerm_user_assigned_identity" "datadog_mid" {
-  name                = var.managed_identity_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  tags = merge(
-    try(var.tags),
-    tomap({
-      "Resource Type" = "Managed Identity"
     })
   )
 }

@@ -1,3 +1,15 @@
+resource "azurerm_user_assigned_identity" "sta_datadog_mid" {
+  name                = format("${var.managed_identity_name}%s", "-sta")
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  tags = merge(
+    try(var.tags),
+    tomap({
+      "Resource Type" = "Managed Identity"
+    })
+  )
+}
+
 module "storage_account" {
   source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.0"
 
@@ -12,7 +24,7 @@ module "storage_account" {
   cmk_key_vault_id                  = var.storage_account.cmk_key_vault_id
   cmk_key_name                      = var.storage_account.cmk_key_name
   system_assigned_identity_enabled  = var.storage_account.system_assigned_identity_enabled
-  user_assigned_identities          = tolist([azurerm_user_assigned_identity.datadog_mid.id])
+  user_assigned_identities          = tolist([azurerm_user_assigned_identity.sta_datadog_mid.id])
   immutability_policy               = var.storage_account.immutability_policy
   tags = merge(
     try(var.tags),
