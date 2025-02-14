@@ -1,5 +1,5 @@
 resource "azurerm_user_assigned_identity" "ehns_datadog_mid" {
-  name                = format("${var.managed_identity_name}, %s", "-ehns")
+  name                = format("${var.managed_identity_name}%s", "-ehns")
   resource_group_name = var.resource_group_name
   location            = var.location
   tags = merge(
