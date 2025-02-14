@@ -71,7 +71,7 @@ resource "azurerm_linux_function_app" "this" {
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"     = true
     "WEBSITE_RUN_FROM_PACKAGE"            = 1
     "DD_SITE"                             = "datadoghq.eu"
-    "DD_API_KEY"                          = data.azurerm_key_vault_secret.datadog_api_key.value
+    "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
   }
   site_config {
     always_on = true
