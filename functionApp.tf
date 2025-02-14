@@ -38,8 +38,15 @@ resource "azurerm_role_assignment" "func_datadog_mid_sta_table" {
   skip_service_principal_aad_check = false
 }
 
+resource "azurerm_role_assignment" "func_datadog_mid_keyvault" {
+  principal_id                     = azurerm_user_assigned_identity.func_datadog_mid.principal_id
+  scope                            = data.azurerm_key_vault.this.id
+  role_definition_name             = "Key Vault Secrets User"
+  skip_service_principal_aad_check = false
+}
+
 resource "azurerm_linux_function_app" "this" {
-  depends_on                    = [ azurerm_role_assignment.func_datadog_mid_sta_blob, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table ]
+  depends_on                    = [ azurerm_role_assignment.func_datadog_mid_sta_blob, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table, azurerm_role_assignment.func_datadog_mid_keyvault ]
   location                      = var.location
   resource_group_name           = var.resource_group_name
   name                          = var.function_app_name
