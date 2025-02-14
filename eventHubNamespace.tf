@@ -1,3 +1,22 @@
+resource "azurerm_user_assigned_identity" "ehns_datadog_mid" {
+  name                = format("${var.managed_identity_name}, %s", "-ehns")
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  tags = merge(
+    try(var.tags),
+    tomap({
+      "Resource Type" = "Managed Identity"
+    })
+  )
+}
+
+resource "azurerm_role_assignment" "ehns_datadog_mid" {
+  principal_id                     = azurerm_user_assigned_identity.ehns_datadog_mid.principal_id
+  scope                            = data.azurerm_key_vault.this.id
+  role_definition_name             = "Key Vault Crypto User"
+  skip_service_principal_aad_check = false
+}
+
 resource "azurerm_eventhub_namespace" "this" {
   location                      = var.location
   resource_group_name           = var.resource_group_name
@@ -14,7 +33,7 @@ resource "azurerm_eventhub_namespace" "this" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.datadog_mid.id]
+    identity_ids = [azurerm_user_assigned_identity.ehns_datadog_mid.id]
   }
 
   tags = merge(
@@ -28,7 +47,7 @@ resource "azurerm_eventhub_namespace" "this" {
 resource "azurerm_eventhub_namespace_customer_managed_key" "this" {
   eventhub_namespace_id             = azurerm_eventhub_namespace.this.id
   key_vault_key_ids                 = [data.azurerm_key_vault_key.cmk_encryption_key.id]
-  user_assigned_identity_id         = azurerm_user_assigned_identity.datadog_mid.id
+  user_assigned_identity_id         = azurerm_user_assigned_identity.ehns_datadog_mid.id
   infrastructure_encryption_enabled = true
 }
 
