@@ -64,6 +64,12 @@ variable "key_vault_secret_datadog_apikey_name" {
   default     = "datadog-api-key"
 }
 
+variable "key_vault_secret_datadog_site_name" {
+  type        = string
+  description = "The name of the Key Vault secret containing the DataDog Site (host)"
+  default     = "datadog-site"
+}
+
 variable "key_vault_secret_cmk_key_name" {
   type    = string
   default = "cmkrsa"
