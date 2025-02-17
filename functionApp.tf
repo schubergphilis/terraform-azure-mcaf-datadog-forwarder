@@ -46,15 +46,17 @@ resource "azurerm_role_assignment" "func_datadog_mid_keyvault" {
 }
 
 resource "azurerm_linux_function_app" "this" {
-  depends_on                    = [ module.storage_account, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table, azurerm_role_assignment.func_datadog_mid_keyvault ]
-  location                      = var.location
-  resource_group_name           = var.resource_group_name
-  name                          = var.function_app_name
-  service_plan_id               = var.function_app.service_plan_id
-  virtual_network_subnet_id     = var.function_app.vnet_subnet_id
-  storage_account_name          = module.storage_account.name
-  storage_uses_managed_identity = true
-  https_only                    = true
+  depends_on                                      = [ module.storage_account, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table, azurerm_role_assignment.func_datadog_mid_keyvault ]
+  location                                        = var.location
+  resource_group_name                             = var.resource_group_name
+  name                                            = var.function_app_name
+  service_plan_id                                 = var.function_app.service_plan_id
+  virtual_network_subnet_id                       = var.function_app.vnet_subnet_id
+  storage_account_name                            = module.storage_account.name
+  storage_uses_managed_identity                   = true
+  ftp_publish_basic_authentication_enabled        = false
+  webdeploy_publish_basic_authentication_enabled  = false
+  https_only                                      = true
   identity {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.func_datadog_mid.id]
@@ -74,7 +76,10 @@ resource "azurerm_linux_function_app" "this" {
     "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
   }
   site_config {
-    always_on = true
+    always_on                             = true
+    http2_enabled                         = true
+    ftps_state                            = "Disabled"
+    minimum_tls_version                   = "1.2"
   }
   tags = merge(
     try(var.tags),
