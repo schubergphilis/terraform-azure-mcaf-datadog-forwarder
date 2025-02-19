@@ -83,3 +83,19 @@ resource "azurerm_eventhub_consumer_group" "this" {
   eventhub_name       = azurerm_eventhub.this.name
   resource_group_name = var.resource_group_name
 }
+
+module "private_endpoints" {
+  source = "github.com/schubergphilis/terraform-azure-mcaf-private-endpoints.git?ref=v0.4.1"
+
+  private_endpoints = {
+    "event_hub_namespace" = {
+      private_connection_resource_id = azurerm_eventhub_namespace.this.id
+      subnet_id                      = data.azurerm_subnet.ddog.id
+      resource_group_name            = var.resource_group_name
+      location                       = var.location
+      subresource_name               = "namespace"
+      private_dns_zone_resource_ids  = [data.azurerm_private_dns_zone.eventgrid.id]
+      tags                           = var.tags
+    }
+  }
+}
