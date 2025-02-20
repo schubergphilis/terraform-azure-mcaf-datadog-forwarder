@@ -20,7 +20,7 @@ resource "azurerm_role_assignment" "sta_datadog_mid" {
 
 module "storage_account" {
   depends_on = [ azurerm_role_assignment.sta_datadog_mid ]
-  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.0"
+  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.2"
 
   name                              = var.storage_account.name
   location                          = var.location
