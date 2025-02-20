@@ -75,14 +75,14 @@ resource "azurerm_linux_function_app" "this" {
     "WEBSITE_RUN_FROM_PACKAGE"            = 1
     "DD_SITE"                             = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_site.id})"
     "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
+    "functions_extension_version"        = "~4"
+    "WEBSITE_NODE_DEFAULT_VERSION"       = "14"
   }
   site_config {
     always_on                             = true
     http2_enabled                         = true
     ftps_state                            = "Disabled"
     minimum_tls_version                   = "1.2"
-    node_version                          = "14"
-    functions_extension_version           = "~4"
   }
 
   storage_account {
