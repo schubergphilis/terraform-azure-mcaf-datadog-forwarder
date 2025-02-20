@@ -35,11 +35,17 @@ module "storage_account" {
   system_assigned_identity_enabled  = var.storage_account.system_assigned_identity_enabled
   user_assigned_identities          = tolist([azurerm_user_assigned_identity.sta_datadog_mid.id])
   immutability_policy               = var.storage_account.immutability_policy
-  storage_containers                = var.storage_account_containers
   tags = merge(
     try(var.tags),
     tomap({
       "Resource Type" = "Storage Account"
     })
   )
+}
+
+resource "azurerm_storage_container" "this" {
+  for_each = var.ddog_storage_containers
+  name                  = each.key
+  storage_account_id    = module.storage_account.id
+  container_access_type = "private"
 }
