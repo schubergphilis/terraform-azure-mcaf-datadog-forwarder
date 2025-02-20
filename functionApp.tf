@@ -75,8 +75,11 @@ resource "azurerm_linux_function_app" "this" {
     "WEBSITE_RUN_FROM_PACKAGE"            = 1
     "DD_SITE"                             = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_site.id})"
     "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
-    "functions_extension_version"        = "~4"
-    "WEBSITE_NODE_DEFAULT_VERSION"       = "14"
+    "WEBSITE_NODE_DEFAULT_VERSION"        = "14"
+    "application_insights_connection_string" = azurerm_application_insights.appr_appi.connection_string
+    "application_insights_key" = azurerm_application_insights.appr_appi.instrumentation_key
+    "FUNCTIONS_WORKER_RUNTIME"            = "node"
+    "FUNCTIONS_EXTENSION_VERSION"         = "~4"
   }
   site_config {
     always_on                             = true
