@@ -56,6 +56,7 @@ resource "azurerm_linux_function_app" "this" {
   storage_uses_managed_identity                   = true
   ftp_publish_basic_authentication_enabled        = false
   webdeploy_publish_basic_authentication_enabled  = false
+  public_network_access_enabled                   = false
   https_only                                      = true
   identity {
     type         = "UserAssigned"
