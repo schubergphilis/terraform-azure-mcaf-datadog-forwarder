@@ -102,8 +102,7 @@ variable "storage_account" {
   default = null
 }
 
-variable "storage_account_containers" {
+variable "ddog_storage_containers" {
   description = "Blob Containers to be created in the Storage Account"
-  type = string
-  default = ["functionapp"]
+  type        = set(string)
 }
