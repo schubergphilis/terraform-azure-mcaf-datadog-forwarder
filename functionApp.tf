@@ -83,13 +83,13 @@ resource "azurerm_linux_function_app" "this" {
     minimum_tls_version                   = "1.2"
   }
 
-  storage_account {
-    account_name = module.storage_account.name
-    name = module.storage_account.name
-    type = "AzureBlob"
-    share_name = "functionapp"
-    
-  }
+#  storage_account {
+#    account_name = module.storage_account.name
+#    name = module.storage_account.name
+#    type = "AzureBlob"
+#    share_name = "functionapp"
+#    
+#  }
   tags = merge(
     try(var.tags),
     tomap({
