@@ -102,4 +102,8 @@ variable "storage_account" {
   default = null
 }
 
-
+variable "storage_account_containers" {
+  description = "Blob Containers to be created in the Storage Account"
+  type = string
+  default = ["functionapp"]
+}
