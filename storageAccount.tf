@@ -35,6 +35,7 @@ module "storage_account" {
   system_assigned_identity_enabled  = var.storage_account.system_assigned_identity_enabled
   user_assigned_identities          = tolist([azurerm_user_assigned_identity.sta_datadog_mid.id])
   immutability_policy               = var.storage_account.immutability_policy
+  shared_access_key_enabled         = true
   tags = merge(
     try(var.tags),
     tomap({
