@@ -86,7 +86,11 @@ resource "azurerm_linux_function_app" "this" {
     http2_enabled                         = true
     ftps_state                            = "Disabled"
     minimum_tls_version                   = "1.2"
+    application_stack{
+      node_version                          = "22" 
+    }
   }
+  
 
   storage_account {
     account_name = module.storage_account.name
