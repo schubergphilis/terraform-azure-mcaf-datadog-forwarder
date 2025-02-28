@@ -47,7 +47,7 @@ resource "azurerm_role_assignment" "func_datadog_mid_keyvault" {
 
 resource "azurerm_role_assignment" "func_datadog_mid_eventhub" {
   principal_id                     = azurerm_user_assigned_identity.func_datadog_mid.principal_id
-  scope                            = azurerm_eventhub.this.id
+  scope                            = azurerm_eventhub_namespace.this.id
   role_definition_name             = "Azure Event Hubs Data Receiver"
   skip_service_principal_aad_check = false
 }
