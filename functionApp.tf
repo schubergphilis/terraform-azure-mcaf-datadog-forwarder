@@ -77,7 +77,8 @@ resource "azurerm_linux_function_app" "this" {
     "EVHNS__FQDN"                         = "${var.event_hub.namespace_name}.servicebus.windows.net"
     "EVHNS__clientId"                     = azurerm_user_assigned_identity.func_datadog_mid.client_id
     "EVHNS__credential"                   = "managedidentity"
-    "EVHNS__CONSUMERGROUP"                = var.event_hub.consumer_group.name
+    "EVH__NAME"                           = var.event_hub.hub_name
+    "EVH__CONSUMERGROUP"                  = var.event_hub.consumer_group
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"     = true
     "WEBSITE_RUN_FROM_PACKAGE"            = 1
