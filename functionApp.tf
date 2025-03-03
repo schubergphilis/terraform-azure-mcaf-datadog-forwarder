@@ -74,9 +74,10 @@ resource "azurerm_linux_function_app" "this" {
     "AzureWebJobsStorage__blobServiceUri" = module.storage_account.endpoints.primary_blob_endpoint
     "AzureWebJobsStorage__clientId"       = azurerm_user_assigned_identity.func_datadog_mid.client_id
     "AzureWebJobsStorage__credential"     = "managedidentity"
-    "azeventhub__fullyQualifiedNamespace" = "${var.event_hub.namespace_name}.servicebus.windows.net"
-    "azeventhub__clientId"                = azurerm_user_assigned_identity.func_datadog_mid.client_id
-    "azeventhub__credential"              = "managedidentity"
+    "EVHNS__FQDN"                         = "${var.event_hub.namespace_name}.servicebus.windows.net"
+    "EVHNS__clientId"                     = azurerm_user_assigned_identity.func_datadog_mid.client_id
+    "EVHNS__credential"                   = "managedidentity"
+    "EVHNS__CONSUMERGROUP"                = var.event_hub.consumer_group.name
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"     = true
     "WEBSITE_RUN_FROM_PACKAGE"            = 1
