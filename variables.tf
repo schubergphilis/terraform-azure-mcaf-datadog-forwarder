@@ -41,6 +41,13 @@ variable "event_hub" {
   })
 }
 
+variable "event_hub_namespace" {
+  description = "The properties of the Event Hub Namespace to be deployed"
+  type = object({
+    diagnostics_policy_authorization_rule_name = string
+  })
+}
+
 variable "function_app" {
   description = "The parameters to be used for the Function App deployment. Inludes the ID of the App Service Plan to be used and the ID of the subent for regional VNET integration"
   type = object({

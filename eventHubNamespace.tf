@@ -59,6 +59,16 @@ resource "azurerm_eventhub" "this" {
   depends_on        = [azurerm_eventhub_namespace_customer_managed_key.this]
 }
 
+resource "azurerm_eventhub_namespace_authorization_rule" "this" {
+  name                = var.event_hub_namespace.diagnostics_policy_authorization_rule_name
+  namespace_name      = azurerm_eventhub_namespace.this.name
+  resource_group_name = var.resource_group_name
+
+  listen = false
+  send   = true
+  manage = false
+}
+
 resource "azurerm_eventhub_authorization_rule" "this" {
   name                = var.event_hub.authorization_rule
   namespace_name      = azurerm_eventhub_namespace.this.name
