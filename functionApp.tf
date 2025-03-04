@@ -88,7 +88,7 @@ resource "azurerm_linux_function_app" "this" {
     "FUNCTIONS_EXTENSION_VERSION"         = "~4"
   }
   site_config {
-    always_on                               = true
+    always_on                               = false
     http2_enabled                           = true
     ftps_state                              = "Disabled"
     minimum_tls_version                     = "1.2"
