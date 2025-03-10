@@ -70,14 +70,14 @@ resource "azurerm_eventhub_namespace_authorization_rule" "this" {
 }
 
 resource "azurerm_eventhub_authorization_rule" "this" {
-  name                = var.event_hub.authorization_rule
+  for_each            = var.event_hub_authorization_rules
+  name                = "${var.event_hub.authorization_rule}-${each.key}"
   namespace_name      = azurerm_eventhub_namespace.this.name
   eventhub_name       = azurerm_eventhub.this.name
   resource_group_name = var.resource_group_name
-
-  listen = true
-  send   = true
-  manage = false
+  listen              = each.value.listen
+  send                = each.value.send
+  manage              = each.value.manage
 }
 
 resource "azurerm_role_assignment" "this" {

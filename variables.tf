@@ -113,3 +113,14 @@ variable "ddog_storage_containers" {
   description = "Blob Containers to be created in the Storage Account"
   type        = set(string)
 }
+
+variable "event_hub_authorization_rules" {
+  description = "Event Hub authorization rules"
+  type = map(
+    object({
+      listen              = bool
+      send                = bool
+      manage              = bool
+    })
+  )
+}
