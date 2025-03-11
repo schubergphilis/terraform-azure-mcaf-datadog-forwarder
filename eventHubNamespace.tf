@@ -88,7 +88,8 @@ resource "azurerm_role_assignment" "this" {
 }
 
 resource "azurerm_eventhub_consumer_group" "this" {
-  name                = var.event_hub.consumer_group
+  for_each            = var.event_hub_consumer_groups
+  name                = "${var.event_hub.consumer_group}-${each.key}"
   namespace_name      = azurerm_eventhub_namespace.this.name
   eventhub_name       = azurerm_eventhub.this.name
   resource_group_name = var.resource_group_name

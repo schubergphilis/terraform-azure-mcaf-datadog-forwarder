@@ -78,7 +78,7 @@ resource "azurerm_linux_function_app" "this" {
     "EVHNS__clientId"                     = azurerm_user_assigned_identity.func_datadog_mid.client_id
     "EVHNS__credential"                   = "managedidentity"
     "EVH__NAME"                           = var.event_hub.hub_name
-    "EVH__CONSUMERGROUP"                  = var.event_hub.consumer_group
+    "EVH__CONSUMERGROUP"                  = local.function_app_consumer_group
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"     = true
     "WEBSITE_RUN_FROM_PACKAGE"            = 1

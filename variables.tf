@@ -124,3 +124,8 @@ variable "event_hub_authorization_rules" {
     })
   )
 }
+
+variable "event_hub_consumer_groups" {
+  description = "Event Hub consumer groups"
+  type = set(string)
+}
