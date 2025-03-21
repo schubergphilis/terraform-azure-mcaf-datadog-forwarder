@@ -91,7 +91,7 @@ resource "azurerm_linux_function_app" "this" {
     always_on                               = false
     http2_enabled                           = true
     ftps_state                              = "Disabled"
-    minimum_tls_version                     = "1.2"
+    minimum_tls_version                     = "1.3"
     application_insights_connection_string  = azurerm_application_insights.appr_appi.connection_string
     application_insights_key                = azurerm_application_insights.appr_appi.instrumentation_key
     application_stack{
