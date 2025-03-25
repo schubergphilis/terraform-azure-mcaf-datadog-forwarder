@@ -19,8 +19,8 @@ resource "azurerm_role_assignment" "sta_datadog_mid" {
 
 
 module "storage_account" {
-  depends_on = [ azurerm_role_assignment.sta_datadog_mid ]
-  source = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.2"
+  depends_on = [azurerm_role_assignment.sta_datadog_mid]
+  source     = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.2"
 
   name                              = var.storage_account.name
   location                          = var.location
@@ -45,7 +45,7 @@ module "storage_account" {
 }
 
 resource "azurerm_storage_container" "this" {
-  for_each = var.ddog_storage_containers
+  for_each              = var.ddog_storage_containers
   name                  = each.key
   storage_account_id    = module.storage_account.id
   container_access_type = "private"
