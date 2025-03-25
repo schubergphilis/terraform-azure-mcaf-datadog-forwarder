@@ -129,3 +129,8 @@ variable "event_hub_consumer_groups" {
   description = "Event Hub consumer groups"
   type = set(string)
 }
+
+variable "support_defender_export" {
+  type        = bool
+  description = "Feature flag allowing operators to enable support For Defender's Coninuous Export"
+}
