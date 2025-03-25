@@ -18,7 +18,7 @@ resource "azurerm_role_assignment" "ehns_datadog_mid" {
 }
 
 resource "azurerm_role_assignment" "security_provider" {
-  count  = var.support_defender_export != null ? 1 : 0
+  count = var.support_defender_export != null ? 1 : 0
 
   principal_id                     = "ba468016-bfd0-4042-a934-c2012278a59e" # Windows Azure Security Resource Provider
   scope                            = resource.azurerm_eventhub_namespace.this.id

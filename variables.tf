@@ -118,16 +118,16 @@ variable "event_hub_authorization_rules" {
   description = "Event Hub authorization rules"
   type = map(
     object({
-      listen              = bool
-      send                = bool
-      manage              = bool
+      listen = bool
+      send   = bool
+      manage = bool
     })
   )
 }
 
 variable "event_hub_consumer_groups" {
   description = "Event Hub consumer groups"
-  type = set(string)
+  type        = set(string)
 }
 
 variable "support_defender_export" {

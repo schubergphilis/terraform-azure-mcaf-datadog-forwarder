@@ -53,18 +53,18 @@ resource "azurerm_role_assignment" "func_datadog_mid_eventhub" {
 }
 
 resource "azurerm_linux_function_app" "this" {
-  depends_on                                      = [ module.storage_account, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table, azurerm_role_assignment.func_datadog_mid_keyvault ]
-  location                                        = var.location
-  resource_group_name                             = var.resource_group_name
-  name                                            = var.function_app_name
-  service_plan_id                                 = var.function_app.service_plan_id
-  virtual_network_subnet_id                       = var.function_app.vnet_subnet_id
-  storage_account_name                            = module.storage_account.name
-  storage_uses_managed_identity                   = true
-  ftp_publish_basic_authentication_enabled        = false
-  webdeploy_publish_basic_authentication_enabled  = false
-  public_network_access_enabled                   = false
-  https_only                                      = true
+  depends_on                                     = [module.storage_account, azurerm_role_assignment.func_datadog_mid_sta_file, azurerm_role_assignment.func_datadog_mid_sta_queue, azurerm_role_assignment.func_datadog_mid_sta_table, azurerm_role_assignment.func_datadog_mid_keyvault]
+  location                                       = var.location
+  resource_group_name                            = var.resource_group_name
+  name                                           = var.function_app_name
+  service_plan_id                                = var.function_app.service_plan_id
+  virtual_network_subnet_id                      = var.function_app.vnet_subnet_id
+  storage_account_name                           = module.storage_account.name
+  storage_uses_managed_identity                  = true
+  ftp_publish_basic_authentication_enabled       = false
+  webdeploy_publish_basic_authentication_enabled = false
+  public_network_access_enabled                  = false
+  https_only                                     = true
   identity {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.func_datadog_mid.id]
@@ -88,24 +88,24 @@ resource "azurerm_linux_function_app" "this" {
     "FUNCTIONS_EXTENSION_VERSION"         = "~4"
   }
   site_config {
-    always_on                               = false
-    http2_enabled                           = true
-    ftps_state                              = "Disabled"
-    minimum_tls_version                     = "1.3"
-    application_insights_connection_string  = azurerm_application_insights.appr_appi.connection_string
-    application_insights_key                = azurerm_application_insights.appr_appi.instrumentation_key
-    application_stack{
-      node_version                          = "20" 
+    always_on                              = false
+    http2_enabled                          = true
+    ftps_state                             = "Disabled"
+    minimum_tls_version                    = "1.3"
+    application_insights_connection_string = azurerm_application_insights.appr_appi.connection_string
+    application_insights_key               = azurerm_application_insights.appr_appi.instrumentation_key
+    application_stack {
+      node_version = "20"
     }
   }
-  
+
 
   storage_account {
     account_name = module.storage_account.name
-    name = module.storage_account.name
-    type = "AzureBlob"
-    share_name = "functionapp"
-    access_key = module.storage_account.access_keys.primary
+    name         = module.storage_account.name
+    type         = "AzureBlob"
+    share_name   = "functionapp"
+    access_key   = module.storage_account.access_keys.primary
   }
   tags = merge(
     try(var.tags),
