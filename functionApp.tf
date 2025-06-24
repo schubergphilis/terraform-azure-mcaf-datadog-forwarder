@@ -12,28 +12,28 @@ resource "azurerm_user_assigned_identity" "func_datadog_mid" {
 
 resource "azurerm_role_assignment" "func_datadog_mid_sta_blob" {
   principal_id                     = azurerm_user_assigned_identity.func_datadog_mid.principal_id
-  scope                            = data.azurerm_storage_account.this.id
+  scope                            = module.storage_account.id
   role_definition_name             = "Storage Blob Data Contributor"
   skip_service_principal_aad_check = false
 }
 
 resource "azurerm_role_assignment" "func_datadog_mid_sta_file" {
   principal_id                     = azurerm_user_assigned_identity.func_datadog_mid.principal_id
-  scope                            = data.azurerm_storage_account.this.id
+  scope                            = module.storage_account.id
   role_definition_name             = "Storage File Data Privileged Contributor"
   skip_service_principal_aad_check = false
 }
 
 resource "azurerm_role_assignment" "func_datadog_mid_sta_queue" {
   principal_id                     = azurerm_user_assigned_identity.func_datadog_mid.principal_id
-  scope                            = data.azurerm_storage_account.this.id
+  scope                            = module.storage_account.id
   role_definition_name             = "Storage Queue Data Contributor"
   skip_service_principal_aad_check = false
 }
 
 resource "azurerm_role_assignment" "func_datadog_mid_sta_table" {
   principal_id                     = azurerm_user_assigned_identity.func_datadog_mid.principal_id
-  scope                            = data.azurerm_storage_account.this.id
+  scope                            = module.storage_account.id
   role_definition_name             = "Storage Table Data Contributor"
   skip_service_principal_aad_check = false
 }
@@ -82,7 +82,7 @@ resource "azurerm_linux_function_app" "this" {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"     = true
     "WEBSITE_RUN_FROM_PACKAGE"            = 1
-    "DD_SITE"                             = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_site.id})"
+    "DD_SITE"                             = var.datadog_site_hostname
     "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
     "FUNCTIONS_WORKER_RUNTIME"            = "node"
     "FUNCTIONS_EXTENSION_VERSION"         = "~4"
