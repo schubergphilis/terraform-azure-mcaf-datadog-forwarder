@@ -5,15 +5,15 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.53.1 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4 |
-| <a name="requirement_datadog"></a> [datadog](#requirement\_datadog) | >= 3.0.0 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.53 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.0 |
+| <a name="requirement_datadog"></a> [datadog](#requirement\_datadog) | ~> 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.0 |
 
 ## Modules
 
@@ -65,6 +65,7 @@
 | <a name="input_function_app"></a> [function\_app](#input\_function\_app) | The parameters to be used for the Function App deployment. Inludes the ID of the App Service Plan to be used and the ID of the subent for regional VNET integration | <pre>object({<br/>    service_plan_id = string<br/>    vnet_subnet_id  = string<br/>  })</pre> | n/a | yes |
 | <a name="input_function_app_name"></a> [function\_app\_name](#input\_function\_app\_name) | The name of the Function App to be deployed | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location of the deployed Resources | `string` | n/a | yes |
+| <a name="input_log_analytics_workspace_id"></a> [log\_analytics\_workspace\_id](#input\_log\_analytics\_workspace\_id) | The resource id of the log analytics workspace to which application insights logs should be sent | `string` | n/a | yes |
 | <a name="input_managed_identity_name"></a> [managed\_identity\_name](#input\_managed\_identity\_name) | The name of the Managed Identity to be deployed | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The Resource Group that will be used the deployment | `string` | n/a | yes |
 | <a name="input_datadog_site_hostname"></a> [datadog\_site\_hostname](#input\_datadog\_site\_hostname) | Datadog site host name | `string` | `"datadoghq.eu"` | no |
