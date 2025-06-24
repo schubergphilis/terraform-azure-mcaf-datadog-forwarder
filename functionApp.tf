@@ -128,4 +128,8 @@ resource "azurerm_application_insights" "appr_appi" {
       "Resource Type" = "Application Insights"
     })
   )
+  workspace_id = var.log_analytics_workspace_id
+
+  internet_ingestion_enabled = false
+  internet_query_enabled     = false
 }
