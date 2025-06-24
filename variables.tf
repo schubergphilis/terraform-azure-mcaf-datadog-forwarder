@@ -135,3 +135,8 @@ variable "support_defender_export" {
   description = "Feature flag allowing operators to enable support For Defender's Coninuous Export"
   default     = false
 }
+
+variable "log_analytics_workspace_id" {
+  type        = string
+  description = "The resource id of the log analytics workspace to which application insights logs should be sent"
+}

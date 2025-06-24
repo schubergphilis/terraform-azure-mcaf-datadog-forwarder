@@ -94,6 +94,7 @@ resource "azurerm_linux_function_app" "this" {
     minimum_tls_version                    = "1.3"
     application_insights_connection_string = azurerm_application_insights.appr_appi.connection_string
     application_insights_key               = azurerm_application_insights.appr_appi.instrumentation_key
+    vnet_route_all_enabled                 = true
     application_stack {
       node_version = "20"
     }
@@ -127,4 +128,8 @@ resource "azurerm_application_insights" "appr_appi" {
       "Resource Type" = "Application Insights"
     })
   )
+  workspace_id = var.log_analytics_workspace_id
+
+  internet_ingestion_enabled = false
+  internet_query_enabled     = false
 }
