@@ -31,6 +31,8 @@ module "datadog_forwarder" {
   application_insights_name = "example-datadog-insights"
   managed_identity_name     = "datadog-mid"
 
+  log_analytics_workspace_id = "/resource/path/to/log-analytics-workspace"
+
   event_hub = {
     namespace_name     = "example-datadog-evhns"
     hub_name           = "example-datadog-evh"

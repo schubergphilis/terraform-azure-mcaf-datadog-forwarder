@@ -137,6 +137,6 @@ variable "support_defender_export" {
 }
 
 variable "log_analytics_workspace_id" {
-  type = string
+  type        = string
   description = "The resource id of the log analytics workspace to which application insights logs should be sent"
 }
