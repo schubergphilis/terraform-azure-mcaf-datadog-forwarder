@@ -94,6 +94,7 @@ resource "azurerm_linux_function_app" "this" {
     minimum_tls_version                    = "1.3"
     application_insights_connection_string = azurerm_application_insights.appr_appi.connection_string
     application_insights_key               = azurerm_application_insights.appr_appi.instrumentation_key
+    vnet_route_all_enabled                 = true
     application_stack {
       node_version = "20"
     }
