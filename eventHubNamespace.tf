@@ -18,7 +18,7 @@ resource "azurerm_role_assignment" "ehns_datadog_mid" {
 }
 
 resource "azurerm_role_assignment" "security_provider" {
-  count = var.windows_azure_security_resource_provider_id != null ? 1 : 0
+  count                            = var.windows_azure_security_resource_provider_id != null ? 1 : 0
   principal_id                     = var.windows_azure_security_resource_provider_id # Windows Azure Security Resource Provider
   scope                            = resource.azurerm_eventhub_namespace.this.id
   role_definition_name             = "Azure Event Hubs Data Sender"
