@@ -130,10 +130,10 @@ variable "event_hub_consumer_groups" {
   type        = set(string)
 }
 
-variable "support_defender_export" {
-  type        = bool
-  description = "Feature flag allowing operators to enable support For Defender's Coninuous Export"
-  default     = false
+variable "windows_azure_security_resource_provider_id" {
+  type        = string
+  description = "Optional: This is used to enable Defender export to Event Hub. The Windows Azure Security resource provider ID can be found under Enterprise Applications."
+  default     = null
 }
 
 variable "log_analytics_workspace_id" {

@@ -78,6 +78,6 @@ module "datadog_forwarder" {
       manage = false
     }
   }
-  event_hub_consumer_groups = ["consumer1", "fnc"]
-  support_defender_export   = true
+  event_hub_consumer_groups                   = ["consumer1", "fnc"]
+  windows_azure_security_resource_provider_id = "Object ID of the Windows Azure Security Resource Provider"
 }

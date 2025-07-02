@@ -18,9 +18,8 @@ resource "azurerm_role_assignment" "ehns_datadog_mid" {
 }
 
 resource "azurerm_role_assignment" "security_provider" {
-  count = var.support_defender_export ? 1 : 0
-
-  principal_id                     = "ba468016-bfd0-4042-a934-c2012278a59e" # Windows Azure Security Resource Provider
+  count                            = var.windows_azure_security_resource_provider_id != null ? 1 : 0
+  principal_id                     = var.windows_azure_security_resource_provider_id # Windows Azure Security Resource Provider
   scope                            = resource.azurerm_eventhub_namespace.this.id
   role_definition_name             = "Azure Event Hubs Data Sender"
   skip_service_principal_aad_check = false
