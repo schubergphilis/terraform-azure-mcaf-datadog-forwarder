@@ -79,13 +79,8 @@ resource "azurerm_linux_function_app" "this" {
     "EVHNS__credential"                   = "managedidentity"
     "EVH__NAME"                           = var.event_hub.hub_name
     "EVH__CONSUMERGROUP"                  = local.function_app_consumer_group
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = true
-    "WEBSITE_ENABLE_SYNC_UPDATE_SITE"     = true
-    "WEBSITE_RUN_FROM_PACKAGE"            = 1
     "DD_SITE"                             = var.datadog_site_hostname
     "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
-    "FUNCTIONS_WORKER_RUNTIME"            = "node"
-    "FUNCTIONS_EXTENSION_VERSION"         = "~4"
   }
   site_config {
     always_on                              = false
@@ -100,7 +95,6 @@ resource "azurerm_linux_function_app" "this" {
     }
   }
 
-
   storage_account {
     account_name = module.storage_account.name
     name         = module.storage_account.name
@@ -114,6 +108,17 @@ resource "azurerm_linux_function_app" "this" {
       "Resource Type" = "Function App"
     })
   )
+
+  lifecycle {
+    ignore_changes = [
+      tags["hidden-link: /app-insights-resource-id"],
+      app_settings["WEBSITES_ENABLE_APP_SERVICE_STORAGE"],
+      app_settings["WEBSITE_ENABLE_SYNC_UPDATE_SITE"],
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
+      app_settings["FUNCTIONS_WORKER_RUNTIME"],
+      app_settings["linuxFXVersion"]
+    ]
+  }
 }
 
 resource "azurerm_application_insights" "appr_appi" {
