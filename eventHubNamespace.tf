@@ -34,8 +34,8 @@ resource "azurerm_eventhub_namespace" "this" {
   public_network_access_enabled = false
 
   network_rulesets {
-    public_network_access_enabled  = false # should be false
-    default_action                 = "Deny"
+    public_network_access_enabled  = false
+    default_action                 = "Allow" # Should be "Deny" but seemingly cannot be set if public network access is disabled
     trusted_service_access_enabled = true
   }
 
