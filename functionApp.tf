@@ -95,13 +95,13 @@ resource "azurerm_linux_function_app" "this" {
     }
   }
 
-  storage_account {
-    account_name = module.storage_account.name
-    name         = module.storage_account.name
-    type         = "AzureBlob"
-    share_name   = "functionapp"
-    access_key   = module.storage_account.access_keys.primary
-  }
+  # storage_account {
+  #   account_name = module.storage_account.name
+  #   name         = module.storage_account.name
+  #   type         = "AzureBlob"
+  #   share_name   = "functionapp"
+  #   access_key   = module.storage_account.access_keys.primary
+  # }
   tags = merge(
     try(var.tags),
     tomap({
