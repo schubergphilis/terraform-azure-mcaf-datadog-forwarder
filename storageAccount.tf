@@ -20,7 +20,7 @@ resource "azurerm_role_assignment" "sta_datadog_mid" {
 
 module "storage_account" {
   depends_on = [azurerm_role_assignment.sta_datadog_mid]
-  source     = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.2"
+  source     = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.10.0"
 
   name                              = var.storage_account.name
   location                          = var.location
@@ -35,6 +35,8 @@ module "storage_account" {
   system_assigned_identity_enabled  = var.storage_account.system_assigned_identity_enabled
   user_assigned_identities          = tolist([azurerm_user_assigned_identity.sta_datadog_mid.id])
   immutability_policy               = var.storage_account.immutability_policy
+  versioning_enabled                = false
+  change_feed_enabled               = false
   shared_access_key_enabled         = true
   tags = merge(
     try(var.tags),
