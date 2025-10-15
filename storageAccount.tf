@@ -33,10 +33,11 @@ module "storage_account" {
   cmk_key_vault_id                  = var.storage_account.cmk_key_vault_id
   cmk_key_name                      = var.storage_account.cmk_key_name
   system_assigned_identity_enabled  = var.storage_account.system_assigned_identity_enabled
-  user_assigned_identities          = concat([azurerm_user_assigned_identity.sta_datadog_mid.id], var.user_assigned_identities)
+  user_assigned_identities          = concat([azurerm_user_assigned_identity.sta_datadog_mid.id], var.storage_account.user_assigned_identities)
   versioning_enabled                = false
   change_feed_enabled               = false
   shared_access_key_enabled         = true
+  storage_management_policy         = var.storage_account.storage_management_policy
   tags = merge(
     try(var.tags),
     tomap({
