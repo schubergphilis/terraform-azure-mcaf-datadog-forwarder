@@ -36,7 +36,7 @@ module "storage_account" {
   user_assigned_identities          = concat([azurerm_user_assigned_identity.sta_datadog_mid.id], var.storage_account.user_assigned_identities)
   versioning_enabled                = false
   change_feed_enabled               = false
-  shared_access_key_enabled         = true
+  shared_access_key_enabled         = false
   storage_management_policy         = var.storage_account.storage_management_policy
   tags = merge(
     try(var.tags),
