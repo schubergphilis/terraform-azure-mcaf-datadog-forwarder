@@ -78,7 +78,7 @@ resource "azurerm_linux_function_app" "this" {
     "EVHNS__clientId"                     = azurerm_user_assigned_identity.func_datadog_mid.client_id
     "EVHNS__credential"                   = "managedidentity"
     "EVH__NAME"                           = var.event_hub.hub_name
-    "EVH__CONSUMERGROUP"                  = local.function_app_consumer_group
+    "EVH__CONSUMERGROUP"                  = "${var.event_hub.consumer_group}-fnc"
     "DD_SITE"                             = var.datadog_site_hostname
     "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
   }
@@ -95,13 +95,13 @@ resource "azurerm_linux_function_app" "this" {
     }
   }
 
-  storage_account {
-    account_name = module.storage_account.name
-    name         = module.storage_account.name
-    type         = "AzureBlob"
-    share_name   = "functionapp"
-    access_key   = module.storage_account.access_keys.primary
-  }
+  # storage_account {
+  #   account_name = module.storage_account.name
+  #   name         = module.storage_account.name
+  #   type         = "AzureBlob"
+  #   share_name   = "functionapp"
+  #   access_key   = module.storage_account.access_keys.primary
+  # }
   tags = merge(
     try(var.tags),
     tomap({

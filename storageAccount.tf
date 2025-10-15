@@ -20,7 +20,7 @@ resource "azurerm_role_assignment" "sta_datadog_mid" {
 
 module "storage_account" {
   depends_on = [azurerm_role_assignment.sta_datadog_mid]
-  source     = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.7.2"
+  source     = "github.com/schubergphilis/terraform-azure-mcaf-storage-account.git?ref=v0.10.0"
 
   name                              = var.storage_account.name
   location                          = var.location
@@ -28,14 +28,16 @@ module "storage_account" {
   account_tier                      = var.storage_account.account_tier
   account_replication_type          = var.storage_account.account_replication_type
   account_kind                      = "StorageV2"
-  access_tier                       = var.storage_account.access_tier
+  access_tier                       = "Hot"
   infrastructure_encryption_enabled = var.storage_account.infrastructure_encryption_enabled
   cmk_key_vault_id                  = var.storage_account.cmk_key_vault_id
   cmk_key_name                      = var.storage_account.cmk_key_name
   system_assigned_identity_enabled  = var.storage_account.system_assigned_identity_enabled
-  user_assigned_identities          = tolist([azurerm_user_assigned_identity.sta_datadog_mid.id])
-  immutability_policy               = var.storage_account.immutability_policy
-  shared_access_key_enabled         = true
+  user_assigned_identities          = concat([azurerm_user_assigned_identity.sta_datadog_mid.id], var.storage_account.user_assigned_identities)
+  versioning_enabled                = false
+  change_feed_enabled               = false
+  shared_access_key_enabled         = false
+  storage_management_policy         = var.storage_account.storage_management_policy
   tags = merge(
     try(var.tags),
     tomap({
