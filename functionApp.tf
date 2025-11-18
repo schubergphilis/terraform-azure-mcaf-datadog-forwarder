@@ -83,7 +83,7 @@ resource "azurerm_linux_function_app" "this" {
     "DD_API_KEY"                          = "@Microsoft.KeyVault(SecretUri=${data.azurerm_key_vault_secret.datadog_api_key.id})"
   }
   site_config {
-    always_on                              = false
+    always_on                              = var.function_app.always_on
     http2_enabled                          = true
     ftps_state                             = "Disabled"
     minimum_tls_version                    = "1.3"
