@@ -54,7 +54,7 @@ resource "azurerm_eventhub_namespace" "this" {
 
 resource "azurerm_eventhub_namespace_customer_managed_key" "this" {
   eventhub_namespace_id             = azurerm_eventhub_namespace.this.id
-  key_vault_key_ids                 = [data.azurerm_key_vault_key.cmk_encryption_key.id]
+  key_vault_key_ids                 = [data.azurerm_key_vault_key.cmk_encryption_key.versionless_id]
   user_assigned_identity_id         = azurerm_user_assigned_identity.ehns_datadog_mid.id
   infrastructure_encryption_enabled = true
 }
